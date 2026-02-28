@@ -26,6 +26,7 @@ allowed-tools: Read Write Edit Bash(ls) Bash(open) Bash(wc) Bash(grep)
 ### 1. 解析输入
 
 解析 `$ARGUMENTS`：
+
 - **有内容** → 作为功能名称/问题描述，直接进入 Step 1
 - **空** → 用 AskUserQuestion 问"你想做什么功能？"
 
@@ -42,17 +43,17 @@ ls ./learning/outputs/level-6-zhixue-data-analyst/
 ```
 
 - **存在** → 读取并提取与当前功能相关的素材（见素材提取映射）
-- **不存在** → 使用内置领域知识（[zhixue-domain.md](references/zhixue-domain.md)），提示："将使用内置的智学网领域知识。如果你做过 `/learn-pm-data` 闯关训练，产出会自动丰富 PRD。"
+- **不存在** → 使用内置领域知识（[zhixue-domain.md](../../domain/zhixue-domain.md)），提示："将使用内置的智学网领域知识。如果你做过 `/learn-pm-data` 闯关训练，产出会自动丰富 PRD。"
 
 ### 素材提取映射
 
-| 训练产出 | 提取内容 | 填入 PRD 章节 |
-|---------|---------|-------------|
-| level-1（指标体系） | North Star、L1/L2 指标、OKR | 第 2 节目标、第 10 节成功指标 |
+| 训练产出            | 提取内容                     | 填入 PRD 章节                            |
+| ------------------- | ---------------------------- | ---------------------------------------- |
+| level-1（指标体系） | North Star、L1/L2 指标、OKR  | 第 2 节目标、第 10 节成功指标            |
 | level-2（用研综合） | 核心发现、用户画像、用研引言 | 第 1 节问题定义、第 4 节用户场景、附录 A |
-| level-3（竞品分析） | 竞品优劣势、战略建议 | 第 1 节竞争压力、第 3 节不做什么 |
-| level-4（数据叙事） | 数据洞察、受众适配 | 第 1 节证据来源 |
-| level-6（数据技能） | 实体定义、指标精确口径 | 第 8 节数据依赖、第 10 节统计口径 |
+| level-3（竞品分析） | 竞品优劣势、战略建议         | 第 1 节竞争压力、第 3 节不做什么         |
+| level-4（数据叙事） | 数据洞察、受众适配           | 第 1 节证据来源                          |
+| level-6（数据技能） | 实体定义、指标精确口径       | 第 8 节数据依赖、第 10 节统计口径        |
 
 提取时只保留与当前功能名称/主题相关的段落，不全量搬入。
 
@@ -65,6 +66,7 @@ ls ./learning/outputs/level-6-zhixue-data-analyst/
 用 3 个 AskUserQuestion 快速定框。每个单独问，不要一次问 3 个。
 
 **第一个**：驱动力
+
 ```
 这个需求的驱动力是？
 - 指标异常（某个数据在恶化）
@@ -75,6 +77,7 @@ ls ./learning/outputs/level-6-zhixue-data-analyst/
 ```
 
 **第二个**：时间约束
+
 ```
 目标上线时间？
 - 本季度（< 3 个月，需求要精简）
@@ -84,6 +87,7 @@ ls ./learning/outputs/level-6-zhixue-data-analyst/
 ```
 
 **第三个**：读者
+
 ```
 这份 PRD 主要给谁看？
 - 设计师（需要详细场景和交互说明）
@@ -93,6 +97,7 @@ ls ./learning/outputs/level-6-zhixue-data-analyst/
 ```
 
 根据回答调整 PRD 侧重：
+
 - 读者含设计师 → 第 5 节（页面流程）必须详细
 - 读者含研发 → 第 8 节（数据依赖）必须详细
 - 读者是领导 → 第 1 节（问题定义）和第 10 节（成功指标）加强
@@ -114,6 +119,7 @@ ls ./learning/outputs/level-6-zhixue-data-analyst/
 ```
 
 如果未检测到训练产出：
+
 ```
 未检测到训练产出，将使用内置领域知识生成 PRD。
 ```
@@ -140,13 +146,15 @@ ls ./learning/outputs/level-6-zhixue-data-analyst/
 12. 里程碑计划（关键路径标注）
 
 **生成规则**：
+
 - 有训练素材的章节 → 预填训练内容，标注 `[来源: 闯关训练第X关]`
 - 需要真实数据的地方 → 用 `[待填: 描述]` 占位
 - 需要确认的假设 → 用 `[待确认: 描述]` 占位
 - 第 5、6 节根据功能类型判断是否需要（不涉及页面/学科差异则省略）
-- 角色术语严格参考 [zhixue-domain.md](references/zhixue-domain.md)
+- 角色术语严格参考 [zhixue-domain.md](../../domain/zhixue-domain.md)
 
 **生成后**：
+
 1. 用 Write 工具写入 `./learning/outputs/prd-{功能缩写}.md`
 2. 用 `open -a "MarkText"` 打开文件
 3. 输出 PRD 概览（章节列表 + 占位符数量）
@@ -158,6 +166,7 @@ ls ./learning/outputs/level-6-zhixue-data-analyst/
 按 [data-filling-guide.md](references/data-filling-guide.md) 的交互脚本执行。
 
 **核心流程**：
+
 1. 扫描 PRD 中所有占位符，输出"数据缺口清单"
 2. 用 AskUserQuestion 询问 PM 是逐项填充还是跳过
 3. 如果填充：按类型分批（每批 3-4 项），三种应答路径：
@@ -174,16 +183,19 @@ ls ./learning/outputs/level-6-zhixue-data-analyst/
 按 [delivery-checklist.md](references/delivery-checklist.md) 的 20 项清单自动检查。
 
 **检查方式**：
+
 - 读取 PRD 文件内容
 - 逐项检查（搜索占位符、检查章节结构、验证格式）
 - 输出质检报告（✅ 通过 / ⚠️ 待处理 / ❌ 阻塞）
 
 **阻塞项处理**：
+
 - 如有 ❌ 阻塞项 → 用 AskUserQuestion 逐个引导修复
 - 修复后重新检查该项
 - 全部阻塞项清除后输出最终结论
 
 **最终输出**：
+
 1. 用 Edit 工具写入最终版 PRD
 2. 用 MarkText 重新打开
 3. 输出完成提示：
